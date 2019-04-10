@@ -1,14 +1,19 @@
-import {SET_BLOCK, SET_NEXT_PLAYER, SET_GAME_OVER, setGameOver} from '../actions/action.js';
+import {SET_BLOCK, SET_NEXT_PLAYER, SET_GAME_OVER} from '../actions/action.js';
 
-export function reducer(state, action) {
+export default function reducer(state, action) {
     switch (action.type) {
         case SET_BLOCK: {
-            return Object.assign({}, state, 
-                Object.assign(
-                    [...state.blocks], {
-                        [action.index]: action.block
-                    }
-                )
+            let a = Object.assign(
+                [...state.blocks], {
+                    [action.index]: action.block
+                }
+            );
+            console.log(a);
+            let b = Object.assign({}, state, a  
+                );
+            console.log(b);
+            
+            return Object.assign({}, state, a  
             );
         }
         case SET_NEXT_PLAYER: {
@@ -17,7 +22,7 @@ export function reducer(state, action) {
             });
         }
         case SET_GAME_OVER: {
-            return Object.assign({}. state, {
+            return Object.assign({}, state, {
                 isGameOver: action.isGameOver
             });
         }
