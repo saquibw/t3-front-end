@@ -4,49 +4,28 @@ import { connect } from 'react-redux';
 import { setBlock, setNextPlayer, setGameOver } from '../actions/action';
 
 class Board extends React.Component {
-constructor(props) {
-    super(props);
-
-    // this.state = {
-    //     blocks: Array(9).fill(null),
-    //     // xIsNext: true,
-    //     // gameOver: false,
-    // };
-}
 
 renderBlock(i) {
     return (
         <Block 
-        //value={this.state.blocks[i]}
         value={this.props.blocks[i]}
         onClick={() => this.handleClick(i)}
         />
     )
 }
 
-handleClick(i) {
-    //const blocks = this.props.blocks.slice();
-    
+handleClick(i) { 
     if(this.props.blocks[i] || this.props.isGameOver) {
         return;
     }
-    let block = this.props.xIsNext ? 'X' : 'O';
-    
-    
+    let block = this.props.xIsNext ? 'X' : 'O';    
 
-    this.checkWinner();
+    this.props.setNextPlayer(this.props.xIsNext);
+    this.props.setBlock(i, block);
 
-    if(!this.props.isGameOver) {
-        this.props.setNextPlayer(this.props.xIsNext);
-        this.props.setBlock(i, block);
-        // this.setState(
-        //     {
-        //         blocks: blocks,
-        //         xIsNext: !this.state.xIsNext,
-        //     }
-        // );
-
-    }
+    setTimeout(() => {
+        this.checkWinner();
+    }, 200);
     
 }
 
@@ -65,21 +44,16 @@ checkWinner() {
 
       for (let i = 0; i < lines.length; i++) {
         const [a,b,c] = lines[i];
-        if(blocks[a] && blocks[a] === blocks[b] && blocks[a] === blocks[c]) {
-            // this.setState(
-            // {
-            //     gameOver: true,
-            // }
-            // );
+        if(blocks[a] && blocks[a] === blocks[b] && blocks[a] === blocks[c]) {           
             this.props.setGameOver(true);
-            return;
         } 
       }
 }
 
 render() {
+    
     let message = '';
-    //if (this.state.gameOver) {
+    console.log(this.props);
     if (this.props.isGameOver) {
         message = 'Winner: ' + (this.props.xIsNext ? 'O' : 'X');
     } else {
@@ -115,12 +89,9 @@ render() {
 }
 
 const mapStateToProps = store => {
-    //console.log(store);
-    //state = state;
     return store;
 }
 
-//export default Board;
 export default connect(
     mapStateToProps,
     {setBlock, setNextPlayer, setGameOver}
