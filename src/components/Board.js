@@ -2,6 +2,7 @@ import React from 'react';
 import Block from './Block.js';
 import { connect } from 'react-redux';
 import { setBlock, setNextPlayer, setGameOver } from '../actions/action';
+import Axios from 'axios';
 
 class Board extends React.Component {
 
@@ -26,7 +27,15 @@ handleClick(i) {
     setTimeout(() => {
         this.checkWinner();
     }, 200);
-    
+
+    const status = `${block} selected block number: ${i}`;
+    this.save(status);
+}
+
+save(status) {
+    const url = "http://localhost:3001/api/saveData";
+    Axios.post(url, {status})
+    .then(data => console.log(data))
 }
 
 checkWinner() {
@@ -53,9 +62,9 @@ checkWinner() {
 render() {
     
     let message = '';
-    console.log(this.props);
     if (this.props.isGameOver) {
         message = 'Winner: ' + (this.props.xIsNext ? 'O' : 'X');
+        this.save(message);
     } else {
         message = 'Next player: ' + (this.props.xIsNext ? 'X' : 'O');
     };
