@@ -1,4 +1,4 @@
-import {SET_BLOCK, SET_NEXT_PLAYER, SET_GAME_OVER} from '../actions/action.js';
+import {SET_BLOCK, SET_NEXT_PLAYER, SET_GAME_OVER, UPDATE_GAME_STATUS} from '../actions/action.js';
 
 export default function reducer(state, action) {
     switch (action.type) {
@@ -17,6 +17,11 @@ export default function reducer(state, action) {
         case SET_GAME_OVER: {
             return Object.assign({}, state, {
                 isGameOver: action.isGameOver
+            });
+        }
+        case UPDATE_GAME_STATUS: {
+            return Object.assign({}, state, {
+                gameStatus: Object.assign([...state.gameStatus], action.gameStatus)
             });
         }
         default: return state;

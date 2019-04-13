@@ -34,4 +34,9 @@ body {
   position: absolute;
   left: 40%;
   margin-top: 10px;
+  clear: both;
+}
+
+.game-status {
+  clear: both;
 }

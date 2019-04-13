@@ -12,6 +12,7 @@ const initialState = {
     blocks: Array(9).fill(null),
     xIsNext: true,
     isGameOver: false,
+    gameStatus: [],
 };
 const store = createStore(reducer, initialState);
 
